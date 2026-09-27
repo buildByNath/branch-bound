@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: #000000;
+    color: #f5f5f7;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Optical tracking adjustments matching Apple typography */
+  h1, .display-large {
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  h2, .display-medium {
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  h3, .display-small {
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+
+  p, .body-copy {
+    letter-spacing: -0.005em;
+    line-height: 1.6;
+  }
+
+  .caption {
+    letter-spacing: 0.015em;
+  }
+}
+
+/* Apple glassmorphism and materials */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.apple-glass-card {
+  background: rgba(25, 25, 28, 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.apple-glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.apple-glass-elevated {
+  background: rgba(35, 35, 42, 0.75);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 113, 227, 0.15);
+}
+
+/* Tactile button active states */
+.apple-button {
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.apple-button:active {
+  transform: scale(0.975);
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Subtle glow utility */
+.glow-blue {
+  box-shadow: 0 0 50px -10px rgba(0, 113, 227, 0.35);
+}
+
+.glow-green {
+  box-shadow: 0 0 50px -10px rgba(52, 199, 89, 0.35);
+}
+
+.glow-amber {
+  box-shadow: 0 0 50px -10px rgba(255, 149, 0, 0.35);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
