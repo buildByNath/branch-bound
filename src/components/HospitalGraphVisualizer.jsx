@@ -15,8 +15,8 @@ export default function HospitalGraphVisualizer({ stepData, graphData }) {
   const getNode = (id) => graphData.nodes.find((n) => n.id === id);
 
   return (
-    <div className="relative w-full aspect-[960/520] flex items-center justify-center p-2 bg-black/60 rounded-2xl border border-white/10 overflow-hidden shadow-inner">
-      <svg viewBox="0 0 240 160" className="w-full h-full overflow-visible select-none">
+    <div className="relative w-full aspect-[240/175] flex items-center justify-center p-2 bg-black/60 rounded-2xl border border-white/10 overflow-hidden shadow-inner">
+      <svg viewBox="0 0 240 175" className="w-full h-full select-none">
         
         <defs>
           <linearGradient id="optGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -127,7 +127,7 @@ export default function HospitalGraphVisualizer({ stepData, graphData }) {
 
               {/* Unexplored marker on Ward-C -> Lab edge */}
               {isUnexplored && (
-                <g transform={`translate(${midX + 15}, ${midY})`}>
+                <g transform={`translate(${midX - 18}, ${midY + 8})`}>
                   <rect x="-1" y="-3.8" width="30" height="7.2" rx="1.6" fill="#2a090b" stroke="#ff3b30" strokeWidth="0.7" />
                   <text y="1.2" fill="#ff453a" fontSize="3.6" fontFamily="monospace" fontWeight="bold">
                     UNEXPLORED

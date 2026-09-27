@@ -1,17 +1,25 @@
 import React from 'react';
 
 const MASTER_NODES = [
-  { id: "root", label: "Warehouse", bound: 10, x: 120, y: 18 },
-  { id: "campus", label: "Campus", bound: 18, x: 42, y: 54 },
-  { id: "hospital", label: "Hospital", bound: 11, x: 198, y: 54 },
-  { id: "library", label: "Library", bound: 38, x: 42, y: 90 },
-  { id: "mall", label: "Mall", bound: 26, x: 135, y: 90 },
-  { id: "airport", label: "Airport", bound: 36, x: 210, y: 90 },
-  { id: "techpark_campus", label: "Tech Park", bound: 53, x: 42, y: 126 },
-  { id: "bus_terminal", label: "Bus Terminal", bound: 46, x: 135, y: 126 },
-  { id: "cargo", label: "Cargo", bound: 56, x: 210, y: 126 },
-  { id: "techpark_mall", label: "Tech Park", bound: 61, x: 135, y: 152 },
-  { id: "techpark_cargo", label: "Tech Park", bound: 71, x: 210, y: 152 }
+  { id: "root", label: "Warehouse", bound: 10, x: 135, y: 22 },
+  
+  // Level 1
+  { id: "campus", label: "Campus", bound: 18, x: 50, y: 62 },
+  { id: "hospital", label: "Hospital", bound: 11, x: 185, y: 62 },
+
+  // Level 2
+  { id: "library", label: "Library", bound: 38, x: 50, y: 102 },
+  { id: "mall", label: "Mall", bound: 26, x: 135, y: 102 },
+  { id: "airport", label: "Airport", bound: 36, x: 220, y: 102 },
+
+  // Level 3
+  { id: "techpark_campus", label: "Tech Park", bound: 53, x: 50, y: 142 },
+  { id: "bus_terminal", label: "Bus Terminal", bound: 46, x: 135, y: 142 },
+  { id: "cargo", label: "Cargo", bound: 56, x: 220, y: 142 },
+
+  // Level 4
+  { id: "techpark_mall", label: "Tech Park", bound: 61, x: 135, y: 182 },
+  { id: "techpark_cargo", label: "Tech Park", bound: 71, x: 220, y: 182 }
 ];
 
 const MASTER_EDGES = [
@@ -31,9 +39,12 @@ export default function StateSpaceVisualizer({ currentStepData }) {
   const { tree } = currentStepData;
 
   // Build complete list of nodes and edges for full path visualization
+  // Keep master x and y coordinates so tree structure is fixed across steps
   const allNodes = MASTER_NODES.map((master) => {
     const stepNode = tree.nodes.find((n) => n.id === master.id);
-    return stepNode ? { ...master, ...stepNode } : { ...master, status: "unvisited" };
+    return stepNode 
+      ? { ...master, ...stepNode, x: master.x, y: master.y } 
+      : { ...master, status: "unvisited" };
   });
 
   const allEdges = MASTER_EDGES.map((master) => {
@@ -46,8 +57,8 @@ export default function StateSpaceVisualizer({ currentStepData }) {
   const getNode = (id) => allNodes.find((n) => n.id === id);
 
   return (
-    <div className="relative w-full aspect-[960/520] flex items-center justify-center p-2 bg-black/40 rounded-2xl border border-white/10 overflow-hidden shadow-inner">
-      <svg viewBox="0 0 240 160" className="w-full h-full overflow-visible select-none">
+    <div className="relative w-full aspect-[270/216] flex items-center justify-center p-2 bg-black/50 rounded-2xl border border-white/10 overflow-hidden shadow-inner">
+      <svg viewBox="0 0 270 216" className="w-full h-full select-none">
         
         {/* Draw Edges */}
         {allEdges.map((edge, idx) => {
@@ -100,18 +111,18 @@ export default function StateSpaceVisualizer({ currentStepData }) {
               {edge.label && (
                 <g transform={`translate(${midX}, ${midY})`}>
                   <rect
-                    x="-9.5"
-                    y="-4.2"
-                    width="19.0"
-                    height="8.4"
+                    x="-10"
+                    y="-4.5"
+                    width="20"
+                    height="9.0"
                     rx="2.0"
-                    fill="#000000"
+                    fill="#0a0a0c"
                     stroke={stroke}
-                    strokeWidth="0.7"
+                    strokeWidth="0.8"
                     opacity={isUnvisited ? 0.6 : 0.95}
                   />
                   <text
-                    y="1.6"
+                    y="1.8"
                     fill={
                       isOptimal ? '#34c759' : 
                       isPruned ? '#ff4d4f' : 
@@ -119,7 +130,7 @@ export default function StateSpaceVisualizer({ currentStepData }) {
                       isUnvisited ? 'rgba(255,255,255,0.45)' : 
                       '#ffffff'
                     }
-                    fontSize="4.4"
+                    fontSize="4.2"
                     fontFamily="monospace"
                     fontWeight="bold"
                     textAnchor="middle"
@@ -248,11 +259,11 @@ export default function StateSpaceVisualizer({ currentStepData }) {
                   </text>
                 </g>
               )}
-              {isOptimal && (
+              {(isOptimal || isSolution) && (
                 <g transform="translate(0, 17.5)">
                   <rect x="-9.5" y="-2.8" width="19.0" height="5.6" rx="1.2" fill="#34c759" />
                   <text y="1.4" fill="#ffffff" fontSize="3.2" fontWeight="bold" fontFamily="monospace" textAnchor="middle">
-                    OPTIMAL
+                    {isOptimal ? "OPTIMAL" : "SOLUTION"}
                   </text>
                 </g>
               )}
@@ -263,3 +274,4 @@ export default function StateSpaceVisualizer({ currentStepData }) {
     </div>
   );
 }
+
